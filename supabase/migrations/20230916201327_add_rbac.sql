@@ -126,6 +126,8 @@ SELECT link_role_to_permissions((
                                     where name = 'admin'
                                 ), 'UPDATE', 'tickets');
 
+GRANT ALL ON ALL TABLES IN SCHEMA rbac to postgres, anon, authenticated, service_role;
+
 create or replace function public.add_role(user_id UUID)
     returns void
     language plpgsql
@@ -143,16 +145,15 @@ begin
   end;
 $$;
 
-CREATE OR REPLACE FUNCTION add_role_trigger()
-    RETURNS trigger
-    LANGUAGE plpgsql
-AS $function$ BEGIN
-    select public.add_role(NEW.id);
+CREATE OR REPLACE FUNCTION public.add_role_trigger()
+RETURNS trigger
+AS $$ BEGIN
+PERFORM public.add_role(NEW.id);
 
-    RETURN NEW;
+RETURN NEW;
 END;
-$function$;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Doesn't seems to work, permission error on user creation
--- CREATE TRIGGER add_role_to_user BEFORE INSERT OR UPDATE ON auth.users
---     FOR EACH ROW EXECUTE FUNCTION add_role_trigger();
+
+CREATE TRIGGER add_role_to_user AFTER INSERT ON auth.users
+    FOR EACH ROW EXECUTE FUNCTION add_role_trigger();
