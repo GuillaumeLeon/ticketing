@@ -76,3 +76,6 @@ port = 54329
 pool_mode = "transaction"
 default_pool_size = 20
 max_client_conn = 100
+
+[functions.ticket_received]
+verify_jwt = false

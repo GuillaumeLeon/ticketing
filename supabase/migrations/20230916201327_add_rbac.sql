@@ -109,51 +109,32 @@ SELECT link_role_to_permissions((
 ), 'SELECT', 'tickets');
 
 SELECT link_role_to_permissions((
-                                    select id
-                                    from rbac.role
-                                    where name = 'admin'
-                                ), 'INSERT', 'tickets');
+    select id
+    from rbac.role
+    where name = 'admin'
+), 'INSERT', 'tickets');
 
 SELECT link_role_to_permissions((
-                                    select id
-                                    from rbac.role
-                                    where name = 'admin'
-                                ), 'DELETE', 'tickets');
+    select id
+    from rbac.role
+    where name = 'admin'
+), 'DELETE', 'tickets');
 
 SELECT link_role_to_permissions((
-                                    select id
-                                    from rbac.role
-                                    where name = 'admin'
-                                ), 'UPDATE', 'tickets');
+    select id
+    from rbac.role
+    where name = 'admin'
+), 'UPDATE', 'tickets');
+
 
 GRANT ALL ON ALL TABLES IN SCHEMA rbac to postgres, anon, authenticated, service_role;
 
-create or replace function public.add_role(user_id UUID)
+create or replace function public.add_role(user_id UUID, role_id UUID)
     returns void
     language plpgsql
 as $$
-declare
- roleId UUID := (
-  SELECT id
-  FROM rbac.role
-  WHERE name = 'admin'
-  LIMIT 1
-);
 begin
     insert into rbac.user_role(user_id, role_id)
-  values (add_role.user_id, roleId);
+  values (add_role.user_id, add_role.role_id);
   end;
 $$;
-
-CREATE OR REPLACE FUNCTION public.add_role_trigger()
-RETURNS trigger
-AS $$ BEGIN
-PERFORM public.add_role(NEW.id);
-
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-
-CREATE TRIGGER add_role_to_user AFTER INSERT ON auth.users
-    FOR EACH ROW EXECUTE FUNCTION add_role_trigger();
