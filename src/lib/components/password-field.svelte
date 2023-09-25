@@ -15,15 +15,23 @@
 	$: type = visible ? 'text' : 'password';
 </script>
 
-<div class="form-group">
+<div class="form-control">
 	<Form.Field {config} {name}>
-		<Form.Label class="label">{label}</Form.Label>
-		<div class="input-group input-group-divider grid-cols-[1fr_auto]">
-			<Form.Input class="input" {type} />
-			<!-- <button type="button" class="btn variant-ghost-surface" on:click={handleClick}>
-			{#if !visible} <Eye /> {:else} <EyeOff /> {/if}
-		</button> -->
+		<Form.Label class="label">
+			<div class="label-text">
+				{label}
+			</div>
+		</Form.Label>
+		<div class="join">
+			<Form.Input class="input input-bordered join-item w-full" {type} />
+			<button type="button" class="btn btn-ghost join-item" on:click={handleClick}>
+				{#if !visible} <Eye /> {:else} <EyeOff /> {/if}
+			</button>
 		</div>
-		<Form.Validation />
+		<span class="label">
+			<span class="label-t">
+				<Form.Validation class="error" />
+			</span>
+		</span>
 	</Form.Field>
 </div>

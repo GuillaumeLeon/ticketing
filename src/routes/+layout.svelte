@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { AppBar, AppRail, AppRailAnchor, AppRailTile, AppShell } from '@skeletonlabs/skeleton';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { Ticket } from 'lucide-svelte';
@@ -21,44 +20,42 @@
 
 		return () => subscription.unsubscribe();
 	});
-	let currentTile: number = 0;
 </script>
 
 {#if session}
-	<AppShell>
-		<svelte:fragment slot="header"><AppBar>Header</AppBar></svelte:fragment>
-		<svelte:fragment slot="sidebarLeft"
-			><AppRail>
-				<!-- --- -->
-				<AppRailTile bind:group={currentTile} name="tile-1" value={0} title="tile-1">
-					<svelte:fragment slot="lead"><Ticket /></svelte:fragment>
-					<span>Tile 1</span>
-				</AppRailTile>
-				<AppRailTile bind:group={currentTile} name="tile-2" value={1} title="tile-2">
-					<svelte:fragment slot="lead">(icon)</svelte:fragment>
-					<span>Tile 2</span>
-				</AppRailTile>
-				<AppRailTile bind:group={currentTile} name="tile-3" value={2} title="tile-3">
-					<svelte:fragment slot="lead">(icon)</svelte:fragment>
-					<span>Tile 3</span>
-				</AppRailTile>
-				<!-- --- -->
-				<svelte:fragment slot="trail">
-					<AppRailAnchor href="/" target="_blank" title="Account">(icon)</AppRailAnchor>
-				</svelte:fragment>
-			</AppRail></svelte:fragment
-		>
-		<slot />
-	</AppShell>
+	<div class="bg-base-100 drawer drawer-open">
+		<input id="sidebar" type="checkbox" class="drawer-toggle" />
+		<div class="drawer-content">
+			<!-- Page content here -->
+			<label for="sidebar" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+			<div class="px-6 pb-16 xl:pr-2">
+				<slot />
+			</div>
+		</div>
+		<div class="drawer-side w-80">
+			<label for="sidebar" class="drawer-overlay" />
+			<ul class="menu menu-sm lg:menu-md px-4 py-0 bg-neutral h-full w-80">
+				<div
+					class="sticky top-0 z-20 hidden items-center gap-2 px-4 py-2 backdrop-blur lg:flex shadow-sm"
+				>
+					<a
+						href="/"
+						aria-current="page"
+						aria-label="Homepage"
+						class="flex-0 btn btn-ghost px-2"
+						data-svelte-h="svelte-pw6yxt"
+						><Ticket />
+						<div class="font-title inline-flex text-lg md:text-2xl">
+							<span class="">Ticketing</span>
+						</div></a
+					>
+				</div>
+				<!-- Sidebar content here -->
+				<li><a href="/tickets">tickets</a></li>
+				<li><a>users</a></li>
+			</ul>
+		</div>
+	</div>
 {:else}
 	<slot />
 {/if}
-
-<style>
-	:global(body) {
-		@apply h-full overflow-hidden;
-	}
-	:global(html) {
-		@apply h-full overflow-hidden;
-	}
-</style>

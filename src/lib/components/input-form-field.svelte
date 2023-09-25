@@ -8,10 +8,12 @@
 	export let type: HTMLInputTypeAttribute = 'text';
 </script>
 
-<div class="form-group">
+<div class="form-control">
 	<Form.Field {config} {name}>
 		<Form.Label class="label">{label}</Form.Label>
-		<Form.Input class="input" {type} />
-		<Form.Validation class="text-error-500" />
+		<Form.Input class="input input-bordered" {type} />
+		<span class="label">
+			<Form.Validation class="text-error" />
+		</span>
 	</Form.Field>
 </div>
