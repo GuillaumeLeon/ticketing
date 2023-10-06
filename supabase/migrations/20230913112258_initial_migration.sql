@@ -4,8 +4,11 @@ create table "public"."messages" (
     "content_html" text,
     "created_by" uuid,
     "from" character varying,
+    "lastname" character varying,
+    "firstname" character varying,
     "to" character varying,
     "via" character varying,
+    "message_id" character varying,
     "created_at" timestamp with time zone not null default now(),
     "ticket_id" bigint
 );

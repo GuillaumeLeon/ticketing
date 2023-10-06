@@ -1,5 +1,5 @@
-export const load = async ({ locals: { getSession } }) => {
-	return {
-		session: await getSession(),
-	};
+export const load = async ({ locals: { getSession, supabase } }) => {
+    return {
+        session: await getSession(),
+    };
 };

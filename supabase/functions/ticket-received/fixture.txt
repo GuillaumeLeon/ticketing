@@ -1,0 +1,69 @@
+--xYzZY
+Content-Disposition: form-data; name="envelope"
+
+{"to":["test@mail.guillaumeleon.xyz"],"from":"Guillaume.Leon@protonmail.com"}
+--xYzZY
+Content-Disposition: form-data; name="text"
+
+Envoyé avec la messagerie sécurisée [Proton Mail.](https://proton.me/)
+--xYzZY
+Content-Disposition: form-data; name="html"
+
+<div style="font-family: Arial, sans-serif; font-size: 14px;"><br></div><div style="font-family: Arial, sans-serif; font-size: 14px;"><br></div>
+<div class="protonmail_signature_block" style="font-family: Arial, sans-serif; font-size: 14px;">
+    <div class="protonmail_signature_block-user protonmail_signature_block-empty">
+        
+            </div>
+    
+            <div class="protonmail_signature_block-proton">
+        Envoyé avec la messagerie sécurisée <a target="_blank" href="https://proton.me/" rel="noopener noreferrer">Proton Mail.</a>
+    </div>
+</div>
+
+--xYzZY
+Content-Disposition: form-data; name="headers"
+
+Content-Type: multipart/alternative; boundary="b1_cWtxO1xEkLbr00b7QtTj1DZOPZVT7SVgmEvWRN1lzA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;	s=protonmail3; t=1696015767; x=1696274967;	bh=mhNF2izexzXbXtZ2KurKi6D76xReZWrZ5D+tpm6JKus=;	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;	b=gBqwSAceXEMx7Bod1iOrwKPJk3Uqhia4WVpJCZRnW4sySLR8kMghkxjkp+Ezrq+iI	 s23WeYmkMG+VnwAdcKdy4fb++cmvIkFaL22yXxTF5YhKX+LFKiQpkOcvCOc52WdeAf	 n1LPLwDLrC8lBimL62gVxxg/M51dr7lOAlMCWP1Sg7UYR1sfAH98jmGxoI2w/Zycmz	 om7QVHMy4HnRj6/tBNpX19YdGUYXimUMRp/lMykRHXxGfCCVjGb4cHyReADYHMhiyJ	 XRoCuy7hbxNbvVb0Y4Mi3vYkMSsewZHseRvRwPQ2yj5Rzo3FS2l/vJzXkoyLzkCxQg	 c82iBB5M4mvIw==
+Date: Fri, 29 Sep 2023 19:29:13 +0000
+Feedback-ID: 21743294:user:proton
+From: Guillaume Leon <Guillaume.Leon@protonmail.com>
+MIME-Version: 1.0
+Message-ID: <0d5q_u1bVM1Lx_J5CSHiN6_WBmzCbebsq1RLN0UlMORX_wsSzcBIzYElFHJl-Yvruwq9natEXBbu8mZez5zIihX9WULA2bhTFme9IM5fUqo=@protonmail.com>
+Received: from mail-40131.protonmail.ch (mxd [185.70.40.131]) by mx.sendgrid.net with ESMTP id zX-m4xiHQ42-3EmcH__g4Q for <test@mail.guillaumeleon.xyz>; Fri, 29 Sep 2023 19:29:28.927 +0000 (UTC)
+Subject: This is a correct test I believe
+To: "test@mail.guillaumeleon.xyz" <test@mail.guillaumeleon.xyz>
+
+--xYzZY
+Content-Disposition: form-data; name="sender_ip"
+
+185.70.40.131
+--xYzZY
+Content-Disposition: form-data; name="SPF"
+
+pass
+--xYzZY
+Content-Disposition: form-data; name="to"
+
+"test@mail.guillaumeleon.xyz" <test@mail.guillaumeleon.xyz>
+--xYzZY
+Content-Disposition: form-data; name="attachments"
+
+0
+--xYzZY
+Content-Disposition: form-data; name="charsets"
+
+{"to":"UTF-8","from":"UTF-8","subject":"UTF-8","text":"utf-8","html":"utf-8"}
+--xYzZY
+Content-Disposition: form-data; name="dkim"
+
+{@protonmail.com : pass}
+--xYzZY
+Content-Disposition: form-data; name="from"
+
+Guillaume Leon <Guillaume.Leon@protonmail.com>
+--xYzZY
+Content-Disposition: form-data; name="subject"
+
+This is a correct test I believe
+--xYzZY--

@@ -77,5 +77,8 @@ pool_mode = "transaction"
 default_pool_size = 20
 max_client_conn = 100
 
-[functions.ticket_received]
+[functions.ticket-received]
 verify_jwt = false
+
+[analytics]
+enabled = true

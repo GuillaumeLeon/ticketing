@@ -138,3 +138,20 @@ begin
   values (add_role.user_id, add_role.role_id);
   end;
 $$;
+
+create or replace function public.add_role_by_name(user_id UUID, role_name text)
+    returns void
+    language plpgsql
+as $$
+declare roleId UUID := (
+    SELECT id
+    FROM rbac.role
+    WHERE role.name = add_role_by_name.role_name
+    LIMIT 1
+);
+begin
+    insert into rbac.user_role(user_id, role_id)
+  values (add_role_by_name.user_id, roleId);
+  end;
+$$;
+

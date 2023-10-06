@@ -4,17 +4,21 @@ import { Database } from './database.types';
 import { SupabaseClient, Session } from '@supabase/supabase-js';
 
 declare global {
-	namespace App {
-		interface Locals {
-			supabase: SupabaseClient<Database>;
-			getSession(): Promise<Session | null>;
-		}
-		interface PageData {
-			session: Session | null;
-		}
-		// interface Error {}
-		// interface Platform {}
-	}
+    namespace App {
+        interface Locals {
+            supabase: SupabaseClient<Database>;
+            getSession(): Promise<Session | null>;
+            protected(): Promise<void>;
+        }
+        interface PageData {
+            session: Session | null;
+        }
+        // interface Error {}
+        // interface Platform {}
+    }
 }
 
-export { };
+export type Ticket = Database['public']['Tables']['tickets']['Row'];
+export type Message = Database['public']['Tables']['messages']['Row'];
+
+export {};
