@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import { redirect, type Handle } from '@sveltejs/kit';
 
 import { env } from '$env/dynamic/private';
-import type { Database } from './database.types';
+import type { Database } from './types/database.types';
 
 export const handle: Handle = async ({ event, resolve }) => {
     event.locals.supabase = createSupabaseServerClient<Database>({

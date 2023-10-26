@@ -35,7 +35,7 @@
 </script>
 
 <div class="overflow-x-auto">
-    <table class="table bg-neutral text-neutral-content" {...$tableAttrs}>
+    <table class="table bg-base-300 text-base-content" {...$tableAttrs}>
         <thead>
             {#each $headerRows as headerRow (headerRow.id)}
                 <Subscribe rowAttrs={headerRow.attrs()} let:rowAttrs>

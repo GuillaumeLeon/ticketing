@@ -13,9 +13,10 @@
     "format": "prettier --plugin-search-dir . --write .",
     "test:integration": "playwright test",
     "test:unit": "vitest",
-    "gen:types": "supabase gen types typescript --local > src/database.types.ts"
+    "gen:types": "supabase gen types typescript --local > ./src/types/database.types.ts"
   },
   "devDependencies": {
+    "@melt-ui/pp": "^0.1.2",
     "@playwright/test": "^1.28.1",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.20.4",
@@ -34,9 +35,11 @@
     "prettier": "^2.8.0",
     "prettier-eslint": "^15.0.1",
     "prettier-plugin-svelte": "^2.10.1",
+    "sass": "^1.69.3",
     "svelte": "^4.0.5",
     "svelte-check": "^3.4.3",
     "svelte-headless-table": "^0.17.5",
+    "svelte-sequential-preprocessor": "^2.0.1",
     "tailwindcss": "^3.3.2",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
@@ -45,9 +48,15 @@
   },
   "type": "module",
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@melt-ui/svelte": "^0.52.0",
     "@supabase/auth-helpers-sveltekit": "^0.10.2",
     "@supabase/supabase-js": "^2.33.1",
     "@tiptap/core": "^2.1.11",
+    "@tiptap/extension-bubble-menu": "^2.1.11",
+    "@tiptap/extension-image": "^2.1.12",
+    "@tiptap/extension-link": "^2.1.11",
+    "@tiptap/extension-text-align": "^2.1.12",
     "@tiptap/pm": "^2.1.11",
     "@tiptap/starter-kit": "^2.1.11",
     "bits-ui": "^0.5.7",
@@ -57,6 +66,7 @@
     "sveltekit-superforms": "^1.6.1",
     "tailwind-merge": "^1.14.0",
     "tailwind-variants": "^0.1.14",
+    "vavite": "^3.0.0",
     "zod": "^3.22.2"
   }
 }

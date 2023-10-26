@@ -41,8 +41,10 @@ export interface Database {
           created_at: string
           created_by: string | null
           direction: string
+          firstname: string | null
           from: string
           id: number
+          lastname: string | null
           message_id: string
           ticket_id: number
           to: string
@@ -54,8 +56,10 @@ export interface Database {
           created_at?: string
           created_by?: string | null
           direction: string
+          firstname?: string | null
           from: string
           id?: number
+          lastname?: string | null
           message_id: string
           ticket_id: number
           to: string
@@ -67,8 +71,10 @@ export interface Database {
           created_at?: string
           created_by?: string | null
           direction?: string
+          firstname?: string | null
           from?: string
           id?: number
+          lastname?: string | null
           message_id?: string
           ticket_id?: number
           to?: string
@@ -147,6 +153,13 @@ export interface Database {
         Args: {
           user_id: string
           role_id: string
+        }
+        Returns: undefined
+      }
+      add_role_by_name: {
+        Args: {
+          user_id: string
+          role_name: string
         }
         Returns: undefined
       }

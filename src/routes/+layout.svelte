@@ -2,7 +2,7 @@
     import { invalidate } from '$app/navigation';
     import { onMount } from 'svelte';
     import { Ticket } from 'lucide-svelte';
-    import '../app.css';
+    import '../app.scss';
 
     export let data;
 
@@ -26,8 +26,6 @@
     <div class="bg-base-200 drawer drawer-open text-base-content h-screen">
         <input id="sidebar" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content bg-base-100">
-            <!-- Page content here -->
-            <label for="sidebar" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
             <div class="p-6 pb-16">
                 <slot />
             </div>

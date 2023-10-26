@@ -1,8 +1,9 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import { parse } from 'https://esm.sh/parse-multipart-data@1.5.0';
+import { getBoundary } from 'https://esm.sh/parse-multipart-data@1.5.0';
 import { Buffer } from 'https://deno.land/std@0.136.0/node/buffer.ts';
 import { SupabaseClient, createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { Database } from '../../../src/database.types.ts';
+import { Database } from '../../../src/types/database.types.js';
+import { Ticket } from '../../../src/app.d.ts';
 
 export type Envelope = {
     to: string[];
@@ -76,17 +77,17 @@ serve(async (req) => {
         Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     );
 
-    const boundary = /boundary=(.*)$/.exec(req.headers.get('Content-Type') ?? '');
+    const boundary = getBoundary(req.headers.get('Content-Type') as string);
 
     if (!boundary) {
         throw new Error('Invalid headers');
     }
 
     const bodyMap = new Map();
-    const body = parse(Buffer.from(await req.arrayBuffer()), boundary[1]);
+    const body = await req.formData();
 
-    body.forEach((d) => {
-        bodyMap.set(d.name, Buffer.isBuffer(d.data) ? Buffer.from(d.data).toString() : d.data);
+    body.forEach((data, key) => {
+        bodyMap.set(key, Buffer.isBuffer(data) ? Buffer.from(data).toString() : data);
     });
 
     const parsedHeader = parseHeaders(bodyMap.get('headers'));
@@ -109,7 +110,7 @@ serve(async (req) => {
             const { data: existingMessage } = await supabaseClient
                 .from('messages')
                 .select()
-                .eq('message_id', messageId)
+                .eq('message_id', messageId.content)
                 .single();
 
             if (existingMessage) {
@@ -117,6 +118,7 @@ serve(async (req) => {
                     headers: { 'Content-Type': 'application/json' },
                 });
             }
+            const { lastname, firstname } = parseNames(bodyMap.get('from'));
 
             const { data: message, error: messageError } = await supabaseClient
                 .from('messages')
@@ -129,6 +131,8 @@ serve(async (req) => {
                     content_text: bodyMap.get('text'),
                     message_id: messageId.content,
                     direction: 'incoming',
+                    lastname,
+                    firstname,
                 })
                 .select()
                 .single();
@@ -141,15 +145,18 @@ serve(async (req) => {
             }
 
             if (message && wasRecentlyCreated) {
-                // const { error } = await supabaseClient.functions.invoke('send-first-response', {
-                //     body: {
-                //         messageId: message.id,
-                //     },
-                // });
-                // return new Response(JSON.stringify({ data: error }), {
-                //     headers: { 'Content-Type': 'application/json' },
-                //     status: 500,
-                // });
+                const { error } = await supabaseClient.functions.invoke('send-first-response', {
+                    body: {
+                        messageId: message.id,
+                    },
+                });
+
+                if (error) {
+                    return new Response(JSON.stringify({ data: error }), {
+                        headers: { 'Content-Type': 'application/json' },
+                        status: 500,
+                    });
+                }
             }
         }
     } catch (error) {
@@ -174,4 +181,40 @@ export const verify = (req: Request) => {
     ) {
         throw new Error('Secret is invalid or not existent');
     }
+};
+
+// Guillaume Leon <Guillaume.Leon@protonmail.com>
+export const parseNames = (from: string): { lastname: string | null; firstname: string | null } => {
+    const data = /(.*?) <(.*?)>/.exec(from);
+
+    if (!data) {
+        const email = /<(.*?)>/.exec(from);
+
+        if (!email) {
+            return {
+                firstname: null,
+                lastname: null,
+            };
+        }
+
+        return {
+            firstname: email[1].split('@')[0] ?? null,
+            lastname: null,
+        };
+    }
+    const [firstname, lastname] = data[1].split(' ');
+
+    if (!firstname && !lastname) {
+        const mail = data[2].split('@')[0] ?? null;
+
+        return {
+            firstname: mail,
+            lastname: null,
+        };
+    }
+
+    return {
+        firstname: firstname ?? null,
+        lastname: lastname ?? null,
+    };
 };

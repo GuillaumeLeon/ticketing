@@ -3,10 +3,10 @@
     import Message from '$lib/components/message.svelte';
     import { onMount } from 'svelte';
     import { messages } from './messages';
-    import { Check, Clock, GripVertical } from 'lucide-svelte';
+    import { Check, Clock, GripVertical, Ticket } from 'lucide-svelte';
     import type { Message as IMessage } from '../../../app';
     import type { SupabaseClient } from '@supabase/supabase-js';
-    import type { Database } from '../../../database.types';
+    import type { Database } from '../../../types/database.types';
 
     export let data;
     const supabase: SupabaseClient<Database> = data.supabase;
@@ -20,7 +20,7 @@
                 {
                     event: '*',
                     schema: 'public',
-                    table: 'messagges',
+                    table: 'messages',
                     filter: `ticket_id=eq.${data.ticket.id}`,
                 },
                 (payload: IMessage) => {
@@ -57,11 +57,11 @@
     <div class="flex justify-between items-center">
         <div class="flex items-center gap-2">
             <button class="btn btn-neutral btn-sm">
-                <Check /> Close
+                <Check size={20} /> Close
             </button>
             <button class="btn btn-sm btn-ghost">+ add tags</button>
         </div>
-        <div>Assigned</div>
+        <button class="btn btn-primary btn-sm disabled">{data.ticket.status}</button>
     </div>
     <div
         id="messages"
@@ -73,12 +73,7 @@
     </div>
     <div class="px-4 pt-4 mb-2 sm:mb-0">
         <div class="relative flex">
-            <Editor
-                to={(
-                    $messages.findLast((message) => message.direction === 'inbound') ??
-                    $messages[$messages.length - 1]
-                ).from}
-            />
+            <Editor />
         </div>
     </div>
 </div>

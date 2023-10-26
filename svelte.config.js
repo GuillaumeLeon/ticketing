@@ -1,3 +1,4 @@
+import { preprocessMeltUI } from '@melt-ui/pp';
 import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
@@ -5,7 +6,7 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	preprocess: [vitePreprocess({})],
+	preprocess: [vitePreprocess({}), preprocessMeltUI()],
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
@@ -16,8 +17,8 @@ const config = {
 	alias: {
 		$lib: './src/lib',
 		'$lib/*': './src/lib/*',
-		$types: './src/types',
-		'$types/*': './src/types/*'
+		$localTypes: './src/types',
+		'$localTypes/*': './src/types/*'
 	}
 };
 

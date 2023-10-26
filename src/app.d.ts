@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
-import { Database } from './database.types';
+import { Database } from './types/database.types.js';
 import { SupabaseClient, Session } from '@supabase/supabase-js';
 
 declare global {

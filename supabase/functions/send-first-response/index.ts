@@ -4,7 +4,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.36.0';
-import { Database } from '../../../src/database.types.ts';
+import { Database } from '../../../src/types/database.types.js';
 import Mailgun from 'https://deno.land/x/mailgun@v1.1.0/index.ts';
 
 serve(async (req) => {
